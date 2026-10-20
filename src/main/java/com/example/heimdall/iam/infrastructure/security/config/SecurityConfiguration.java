@@ -3,6 +3,7 @@ package com.example.heimdall.iam.infrastructure.security.config;
 import com.example.heimdall.iam.domain.port.out.TokenServicePort;
 import com.example.heimdall.iam.infrastructure.security.jwt.JwtAuthenticationFilter;
 import com.example.heimdall.iam.infrastructure.security.jwt.JwtProperties;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,8 @@ public class SecurityConfiguration {
                 .requestCache(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        // Conserva el error HTTP original en el despacho interno del contenedor.
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/geo/**").permitAll()
                         .anyRequest().authenticated())

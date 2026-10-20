@@ -44,7 +44,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-starter-security-test")
-    testRuntimeOnly("com.h2database:h2")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<Test> {
